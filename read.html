@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="vi" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đọc Truyện - Obey 7</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        darkbg: '#07090e',
+                        cardbg: '#0f1423',
+                        primaryred: '#dc2626',
+                        accentamber: '#d97706',
+                    },
+                    fontFamily: {
+                        cinzel: ['Cinzel', 'serif'],
+                        sans: ['Montserrat', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #07090e;
+            color: #e2e8f0;
+            background-image: radial-gradient(circle at 50% 0%, rgba(220, 38, 38, 0.1), transparent 50%),
+                              radial-gradient(circle at 10% 90%, rgba(217, 119, 6, 0.05), transparent 40%);
+            background-attachment: fixed;
+        }
+        .font-cinzel { font-family: 'Cinzel', serif; }
+        .glow-box {
+            box-shadow: 0 0 30px rgba(220, 38, 38, 0.15);
+        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #07090e; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #dc2626; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Header / Navbar -->
+    <header class="sticky top-0 z-50 backdrop-blur-md bg-darkbg/80 border-b border-red-950/40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <a href="index.html" class="flex items-center space-x-3 group">
+                <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-red-600 to-amber-700 flex items-center justify-center shadow-lg shadow-red-900/30 group-hover:scale-105 transition-transform">
+                    <i class="fa-solid fa-crown text-white text-lg"></i>
+                </div>
+                <div>
+                    <span class="font-cinzel font-bold text-2xl tracking-wider text-white group-hover:text-red-500 transition-colors">OBEY 7</span>
+                    <span class="block text-[10px] tracking-widest text-amber-500 uppercase font-semibold">Sứ Giả Tận Thế</span>
+                </div>
+            </a>
+            
+            <div class="flex items-center space-x-4">
+                <a href="index.html" class="px-4 py-2 rounded-lg bg-cardbg hover:bg-red-950/40 border border-slate-800 text-sm font-medium transition-all flex items-center space-x-2">
+                    <i class="fa-solid fa-house text-red-500"></i>
+                    <span class="hidden sm:inline">Trang Chủ</span>
+                </a>
+                <div class="relative">
+                    <select id="chapterSelect" class="bg-cardbg border border-slate-800 text-white text-sm rounded-lg px-4 py-2 focus:outline-none focus:border-red-600 cursor-pointer">
+                        <option value="1">Chương 1: Khởi Nguyên</option>
+                        <option value="2">Chương 2: Vết Cằn Ngàn Năm</option>
+                        <option value="3">Chương 3: Bản Giao Hưởng Cuối</option>
+                        <option value="4">Chương 4: Tro Tàn Kỷ Nguyên</option>
+                        <option value="5">Chương 5: Tiếng Vọng Vĩnh Hằng</option>
+                        <option value="6">Chương 6: Bình Minh Đen</option>
+                        <option value="7">Chương Cuối: Sứ Giả Tận Thế</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Reading Area -->
+    <main class="flex-grow max-w-4xl w-full mx-auto px-4 sm:px-6 py-10">
+        
+        <!-- Top Navigation Controls -->
+        <div class="flex items-center justify-between mb-8 pb-4 border-b border-slate-800/80">
+            <button onclick="changeChapter(-1)" class="px-4 py-2 rounded-lg bg-cardbg hover:bg-red-950/50 border border-slate-800 text-sm font-medium flex items-center space-x-2 transition-all">
+                <i class="fa-solid fa-arrow-left text-red-500"></i>
+                <span>Chương Trước</span>
+            </button>
+            <div class="text-center">
+                <span id="currentChapterTitle" class="font-cinzel text-amber-500 font-bold tracking-wide text-sm sm:text-base">Chương 1</span>
+            </div>
+            <button onclick="changeChapter(1)" class="px-4 py-2 rounded-lg bg-cardbg hover:bg-red-950/50 border border-slate-800 text-sm font-medium flex items-center space-x-2 transition-all">
+                <span>Chương Sau</span>
+                <i class="fa-solid fa-arrow-right text-red-500"></i>
+            </button>
+        </div>
+
+        <!-- Big Content Box -->
+        <article class="bg-cardbg/80 backdrop-blur-xl border border-red-950/30 rounded-2xl p-6 sm:p-12 glow-box shadow-2xl relative overflow-hidden">
+            <div class="absolute -right-10 -bottom-10 text-slate-800/10 font-cinzel font-black text-9xl pointer-events-none select-none">
+                O7
+            </div>
+
+            <div id="loadingIndicator" class="text-center py-20 text-slate-400 hidden">
+                <i class="fa-solid fa-circle-notch fa-spin text-3xl text-red-600 mb-3"></i>
+                <p>Đang tải chương truyện...</p>
+            </div>
+
+            <!-- Content Container -->
+            <div id="storyContent" class="prose prose-invert max-w-none text-slate-300 leading-relaxed text-base sm:text-lg space-y-6 font-sans">
+                <!-- Nội dung file txt được load tự động vào đây -->
+            </div>
+        </article>
+
+        <!-- Bottom Navigation Controls -->
+        <div class="flex items-center justify-between mt-8 pt-4 border-t border-slate-800/80">
+            <button onclick="changeChapter(-1)" class="px-5 py-2.5 rounded-lg bg-red-950/30 hover:bg-red-900/40 border border-red-900/50 text-sm font-medium flex items-center space-x-2 transition-all">
+                <i class="fa-solid fa-chevron-left text-red-500"></i>
+                <span>Chương Trước</span>
+            </button>
+            <a href="index.html" class="text-slate-400 hover:text-white text-sm transition-colors flex items-center space-x-2">
+                <i class="fa-solid fa-list"></i>
+                <span>Mục Lục</span>
+            </a>
+            <button onclick="changeChapter(1)" class="px-5 py-2.5 rounded-lg bg-red-950/30 hover:bg-red-900/40 border border-red-900/50 text-sm font-medium flex items-center space-x-2 transition-all">
+                <span>Chương Sau</span>
+                <i class="fa-solid fa-chevron-right text-red-500"></i>
+            </button>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-red-950/40 bg-darkbg py-8 mt-16 text-center text-slate-500 text-sm">
+        <p>&copy; 2026 Obey 7.</p>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        let currentChapter = 1;
+        const totalChapters = 7;
+
+        async function loadChapter(chapterNum) {
+            const contentDiv = document.getElementById('storyContent');
+            const loadingDiv = document.getElementById('loadingIndicator');
+            const titleSpan = document.getElementById('currentChapterTitle');
+            const selectElem = document.getElementById('chapterSelect');
+
+            loadingDiv.classList.remove('hidden');
+            contentDiv.innerHTML = '';
+
+            try {
+                const response = await fetch(`public/contents/${chapterNum}.txt`);
+                if (!response.ok) {
+                    throw new Error("Không thể tải nội dung chương truyện.");
+                }
+                const text = await response.text();
+                
+                const paragraphs = text.split('\n\n').map(p => `<p class="mb-4">${p.trim()}</p>`).join('');
+                contentDiv.innerHTML = paragraphs;
+
+                currentChapter = chapterNum;
+                selectElem.value = chapterNum;
+                titleSpan.textContent = selectElem.options[selectElem.selectedIndex].text;
+
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            } catch (error) {
+                contentDiv.innerHTML = `
+                    <div class="text-center py-12 text-red-400">
+                        <i class="fa-solid fa-triangle-exclamation text-4xl mb-4"></i>
+                        <p class="font-semibold text-lg">Chương ${chapterNum} đang được cập nhật nội dung.</p>
+                        <p class="text-sm text-slate-500 mt-2">Vui lòng tạo file ${chapterNum}.txt trong thư mục public/contents/ để xem nội dung.</p>
+                    </div>
+                `;
+            } finally {
+                loadingDiv.classList.add('hidden');
+            }
+        }
+
+        function changeChapter(direction) {
+            let newChapter = currentChapter + direction;
+            if (newChapter >= 1 && newChapter <= totalChapters) {
+                loadChapter(newChapter);
+            }
+        }
+
+        document.getElementById('chapterSelect').addEventListener('change', (e) => {
+            loadChapter(parseInt(e.target.value));
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const ch = parseInt(urlParams.get('ch'));
+            if (ch && ch >= 1 && ch <= totalChapters) {
+                loadChapter(ch);
+            } else {
+                loadChapter(1);
+            }
+        });
+    </script>
+</body>
+</html>

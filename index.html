@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="vi" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OBEY 7 - Trang Chủ Chính Thức | Sử Thi Ngàn Năm</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        darkBg: '#07090e',
+                        darkCard: '#111827',
+                        darkCardHover: '#1f293d',
+                        crimsonRed: '#dc2626',
+                        crimsonGlow: '#ef4444',
+                        amberGold: '#f59e0b',
+                    },
+                    fontFamily: {
+                        cinzel: ['Cinzel', 'serif'],
+                        montserrat: ['Montserrat', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts for Cinematic Fantasy Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #07090e;
+            color: #f3f4f6;
+            overflow-x: hidden;
+        }
+        .font-cinzel {
+            font-family: 'Cinzel', serif;
+        }
+        /* Cinematic background cover with multi-layer gradients */
+        .cinematic-hero {
+            background: linear-gradient(180deg, rgba(7, 9, 14, 0.4) 0%, rgba(7, 9, 14, 0.85) 60%, #07090e 100%),
+                        url('https://placehold.co/1920x1080/090d16/dc2626?text=OBEY+7+Epic+Dark+Fantasy') center/cover no-repeat;
+        }
+        .glass-panel {
+            background: rgba(17, 24, 39, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(220, 38, 38, 0.15);
+        }
+        .glass-nav {
+            background: rgba(7, 9, 14, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .text-glow {
+            text-shadow: 0 0 30px rgba(239, 68, 68, 0.6), 0 0 60px rgba(220, 38, 38, 0.3);
+        }
+        .card-cinematic {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .card-cinematic:hover {
+            transform: translateY(-8px);
+            border-color: rgba(239, 68, 68, 0.5);
+            box-shadow: 0 20px 40px -15px rgba(220, 38, 38, 0.3);
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #07090e;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1f293d;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #dc2626;
+        }
+    </style>
+</head>
+<body class="selection:bg-red-600 selection:text-white">
+
+    <header class="fixed top-0 left-0 right-0 z-50 glass-nav transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <a href="index.html" class="flex items-center gap-3 group">
+                <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-red-600 via-rose-700 to-amber-600 flex items-center justify-center shadow-lg shadow-red-900/40 group-hover:scale-105 transition-transform">
+                    <i class="fa-solid fa-crown text-white text-xl"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-2xl font-black font-cinzel tracking-wider bg-gradient-to-r from-white via-slate-200 to-red-500 bg-clip-text text-transparent">OBEY 7</span>
+                    <span class="text-[10px] font-semibold text-red-400 tracking-widest uppercase">Dark Fantasy Novel</span>
+                </div>
+            </a>
+
+            <!-- Desktop Navigation Menu -->
+            <nav class="hidden md:flex items-center gap-8">
+                <a href="#home" class="text-sm font-medium text-red-400 transition-colors hover:text-red-300">Trang Chủ</a>
+                <a href="#about" class="text-sm font-medium text-slate-300 hover:text-red-400 transition-colors">Cốt Truyện</a>
+                <a href="#chapters" class="text-sm font-medium text-slate-300 hover:text-red-400 transition-colors">Mục Lục & Hồi Kết</a>
+                <a href="#author" class="text-sm font-medium text-slate-300 hover:text-red-400 transition-colors">Tác Giả</a>
+            </nav>
+
+            <!-- Call to Action Buttons -->
+            <div class="hidden md:flex items-center gap-4">
+                <a href="read.html" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-red-600 to-rose-700 text-white font-semibold text-sm shadow-lg shadow-red-600/30 hover:shadow-red-600/60 hover:scale-105 transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-book-open"></i> Đọc Ngay
+                </a>
+            </div>
+
+            <!-- Mobile Menu Toggle Button -->
+            <button id="mobile-menu-btn" class="md:hidden text-slate-300 hover:text-white p-2 focus:outline-none">
+                <i class="fa-solid fa-bars text-2xl"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Drawer Menu -->
+        <div id="mobile-menu" class="hidden md:hidden glass-panel border-b border-slate-800 px-6 py-6 space-y-4 shadow-2xl">
+            <a href="#home" class="block text-base font-medium text-red-400">Trang Chủ</a>
+            <a href="#about" class="block text-base font-medium text-slate-300">Cốt Truyện</a>
+            <a href="#chapters" class="block text-base font-medium text-slate-300">Mục Lục & Hồi Kết</a>
+            <a href="#author" class="block text-base font-medium text-slate-300">Tác Giả</a>
+            <div class="pt-2">
+                <a href="read.html" class="w-full py-3 rounded-xl bg-gradient-to-r from-red-600 to-rose-700 text-white font-semibold text-center block shadow-lg shadow-red-600/30">Đọc Ngay</a>
+            </div>
+        </div>
+    </header>
+
+    <section id="home" class="cinematic-hero min-h-screen flex items-center justify-center pt-28 pb-16 relative overflow-hidden">
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-96 h-96 bg-red-600/15 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-10 left-10 w-72 h-72 bg-amber-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full py-12">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Left Column: Hero Text & Actions -->
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-500/10 border border-red-500/30 text-red-400 text-xs font-semibold uppercase tracking-widest animate-pulse">
+                        <i class="fa-solid fa-fire text-amber-400"></i> #1 TOP 1 Thịnh Hành Tại Máy Chủ
+                    </div>
+                    
+                    <h1 class="text-4xl sm:text-6xl md:text-7xl font-black font-cinzel tracking-tight leading-none">
+                        OBEY 7 <span class="block text-2xl sm:text-4xl md:text-5xl font-extrabold mt-3 bg-gradient-to-r from-red-500 via-rose-400 to-amber-400 bg-clip-text text-transparent text-glow">Sứ Giả Tận Thế</span>
+                    </h1>
+                    
+                    <p class="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-light">
+                        Trải qua hàng ngàn năm chiến tranh đẫm máu giữa các thế lực cổ đại, vạn vật đang đứng trước bờ vực diệt vong. Chương cuối cùng mở ra với sự xuất hiện của <strong class="text-white font-semibold">Sứ Giả Tận Thế</strong>, định đoạt trật tự mới cho toàn vũ trụ.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
+                        <a href="read.html" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-red-600 via-rose-600 to-amber-600 text-white font-bold text-base shadow-xl shadow-red-600/40 hover:shadow-red-600/70 hover:scale-105 transition-all flex items-center justify-center gap-3 group">
+                            <span>Đọc Truyện Ngay</span>
+                            <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                        <a href="#chapters" class="w-full sm:w-auto px-8 py-4 rounded-xl glass-panel text-slate-200 font-bold text-base hover:bg-slate-800/80 hover:border-red-500/40 transition-all flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-list text-red-500"></i> Xem Mục Lục
+                        </a>
+                    </div>
+
+                    <!-- Key stats row -->
+                    <div class="grid grid-cols-3 gap-4 pt-8 border-t border-slate-800/80 max-w-lg mx-auto lg:mx-0">
+                        <div class="glass-panel p-3 rounded-xl text-center">
+                            <div class="text-xl sm:text-2xl font-black font-cinzel text-red-500">1000+</div>
+                            <div class="text-[11px] text-slate-400 uppercase tracking-wider font-semibold">Năm Đại Chiến</div>
+                        </div>
+                        <div class="glass-panel p-3 rounded-xl text-center">
+                            <div class="text-xl sm:text-2xl font-black font-cinzel text-amber-400">Dark</div>
+                            <div class="text-[11px] text-slate-400 uppercase tracking-wider font-semibold">Fantasy</div>
+                        </div>
+                        <div class="glass-panel p-3 rounded-xl text-center">
+                            <div class="text-xl sm:text-2xl font-black font-cinzel text-white">Chương</div>
+                            <div class="text-[11px] text-slate-400 uppercase tracking-wider font-semibold">Sứ Giả Tận Thế</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Stunning Book Poster Preview -->
+                <div class="lg:col-span-5 flex justify-center">
+                    <div class="relative group">
+                        <div class="absolute -inset-2 bg-gradient-to-r from-red-600 via-rose-800 to-amber-600 rounded-3xl blur-xl opacity-40 group-hover:opacity-75 transition-opacity duration-500"></div>
+                        
+                        <div class="relative w-72 sm:w-80 rounded-2xl glass-panel p-4 border border-red-500/30 shadow-2xl">
+                            <div class="relative h-[420px] rounded-xl overflow-hidden mb-4">
+                                <img src="https://placehold.co/600x850/0f172a/ef4444?text=OBEY+7+COVER" alt="Obey 7 Novel Cover" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" onerror="this.src='https://placehold.co/600x850/111827/ef4444?text=OBEY+7'">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
+                                <div class="absolute bottom-4 left-4 right-4 text-center">
+                                    <span class="px-2.5 py-1 rounded-md bg-red-600 text-white text-[10px] font-black uppercase tracking-widest shadow-md">Tiểu Thuyết Sử Thi</span>
+                                    <h3 class="text-xl font-bold font-cinzel text-white mt-2">OBEY 7</h3>
+                                    <p class="text-xs text-slate-300 mt-1">Cuộc Chiến Ngàn Năm & Sứ Giả Tận Thế</p>
+                                </div>
+                            </div>
+                            <a href="read.html" class="w-full py-3 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-sm text-center block shadow-lg shadow-red-600/30 transition-all">
+                                <i class="fa-solid fa-book-bookmark mr-2"></i> Bắt Đầu Đọc
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="py-24 bg-darkBg relative border-t border-slate-900">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                
+                <div class="space-y-6">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-red-500/10 text-red-400 text-xs font-semibold uppercase tracking-wider">
+                        Bối Cảnh Tác Phẩm
+                    </div>
+                    <h2 class="text-3xl sm:text-4xl font-bold font-cinzel text-white leading-tight">
+                        Cuộc Chiến Đã Tồn Tại Từ Hàng Ngàn Năm Trước
+                    </h2>
+                    <p class="text-slate-300 leading-relaxed font-light">
+                        Trong <strong class="text-white font-semibold">Obey 7</strong>, lịch sử không được viết bằng mực mà bằng tro tàn và máu của vô số thế hệ. Cuộc đối đầu kinh hoàng giữa các vương triều cổ xưa và thế lực bóng tối đã kéo dài qua ngàn năm dằng dặc, biến thế giới thành một cõi hỗn mang không lối thoát.
+                    </p>
+                    <p class="text-slate-300 leading-relaxed font-light">
+                        Khi bánh xe thời gian xoay chuyển đến cực điểm, mọi định mệnh hội tụ về một điểm duy nhất: sự giáng thế của nhân vật mang danh hiệu tối thượng để khép lại toàn bộ chu kỳ đau thương này.
+                    </p>
+                    <div class="p-4 rounded-xl glass-panel border-l-4 border-red-600">
+                        <p class="text-xs sm:text-sm text-red-300 italic font-medium">
+                            "Không có chiến thắng nào vinh quang hơn việc tự tay chấm dứt cuộc chiến ngàn năm để tái sinh một thế giới tinh khôi."
+                        </p>
+                    </div>
+                </div>
+
+                <div class="glass-panel p-8 rounded-3xl space-y-6 border border-slate-800 shadow-2xl">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+                        <span class="text-sm font-semibold font-cinzel text-red-400 uppercase tracking-wider">Thông Tin Dự Án</span>
+                        <span class="px-2.5 py-1 rounded-md bg-emerald-500/10 text-emerald-400 text-xs font-semibold">Đang Phát Hành</span>
+                    </div>
+                    <ul class="space-y-4 text-sm text-slate-300">
+                        <li class="flex justify-between items-center py-1 border-b border-slate-800/50"><span class="text-slate-400">Tên tác phẩm:</span> <strong class="text-white font-semibold">Obey 7</strong></li>
+                        <li class="flex justify-between items-center py-1 border-b border-slate-800/50"><span class="text-slate-400">Thể loại:</span> <span class="text-white">Dark Fantasy, Sử thi, Hành động</span></li>
+                        <li class="flex justify-between items-center py-1 border-b border-slate-800/50"><span class="text-slate-400">Quy mô chiến tranh:</span> <span class="text-amber-400 font-bold">Hơn 1.000 năm</span></li>
+                        <li class="flex justify-between items-center py-1"><span class="text-slate-400">Hồi kết đỉnh cao:</span> <span class="text-red-400 font-bold font-cinzel">Sứ Giả Tận Thế</span></li>
+                    </ul>
+                    <div class="pt-2">
+                        <a href="read.html" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-red-600 to-rose-700 text-white font-bold text-center block shadow-lg shadow-red-600/30 hover:shadow-red-600/50 transition-all">
+                            Vào Đọc Truyện Ngay
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="author" class="py-24 bg-darkBg relative border-t border-slate-900">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
+            <span class="px-3 py-1 rounded-md bg-red-500/10 text-red-400 text-xs font-semibold uppercase tracking-wider">Đội Ngũ Sáng Tác</span>
+            <h2 class="text-3xl sm:text-4xl font-bold font-cinzel text-white">Về Dự Án Obey 7</h2>
+            <p class="text-slate-400 max-w-2xl mx-auto leading-relaxed font-light">
+                Được chấp bút bởi nhóm tác giả đam mê dòng văn học kỳ ảo sử thi, <strong class="text-white font-semibold">Obey 7</strong> mang đến trải nghiệm cốt truyện đồ sộ, kịch tính và đầy chiều sâu cho cộng đồng độc giả yêu thích tiểu thuyết giả tưởng.
+            </p>
+            <div class="pt-4 flex items-center justify-center gap-6">
+                <a href="#home" class="p-3.5 rounded-full glass-panel text-slate-300 hover:text-red-500 hover:border-red-500/50 transition-all shadow-md">
+                    <i class="fa-brands fa-facebook-f text-lg"></i>
+                </a>
+                <a href="#home" class="p-3.5 rounded-full glass-panel text-slate-300 hover:text-red-500 hover:border-red-500/50 transition-all shadow-md">
+                    <i class="fa-brands fa-discord text-lg"></i>
+                </a>
+                <a href="#home" class="p-3.5 rounded-full glass-panel text-slate-300 hover:text-red-500 hover:border-red-500/50 transition-all shadow-md">
+                    <i class="fa-brands fa-telegram text-lg"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-darkCard border-t border-slate-800/80 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-red-600 to-amber-600 flex items-center justify-center text-white font-bold">
+                    <i class="fa-solid fa-crown text-sm"></i>
+                </div>
+                <span class="text-lg font-black font-cinzel tracking-wider text-white">OBEY 7</span>
+            </div>
+            <p class="text-xs text-slate-500 font-light">
+                &copy; 2026 Obey 7 Novel Project. All rights reserved. Designed for epic dark fantasy lovers.
+            </p>
+            <div class="flex items-center gap-6 text-xs text-slate-400">
+                <a href="#home" class="hover:text-red-400 transition-colors">Chính sách bảo mật</a>
+                <a href="#home" class="hover:text-red-400 transition-colors">Điều khoản sử dụng</a>
+                <a href="#home" class="hover:text-red-400 transition-colors">Liên hệ</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Toggle mobile menu
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu on link click
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Navbar shadow/blur effect on scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 20) {
+                navbar.classList.add('shadow-xl', 'bg-darkBg/95');
+            } else {
+                navbar.classList.remove('shadow-xl', 'bg-darkBg/95');
+            }
+        });
+    </script>
+</body>
+</html>
