@@ -1,0 +1,290 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Times New Roman', Times, serif, sans-serif;
+    background-color: #1a1a1a;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+/* Khung chứa cuốn sách */
+.book-container {
+    width: 90vw;
+    max-width: 900px;
+    height: 75vh;
+    max-height: 600px;
+    perspective: 3500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Khối sách tổng thể: tự động dịch chuyển và thay đổi kích thước mượt mà */
+.book {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+    background-color: #f4ecd8;
+    border-radius: 4px;
+    transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1), width 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+/* TRẠNG THÁI ĐÓNG SÁCH: Thu hẹp lại đúng 50% và căn giữa màn hình */
+.book.closed {
+    width: 50% !important;
+    transform: translateX(0) rotateY(0deg);
+}
+
+@media (max-width: 768px) {
+    .book.closed {
+        width: 80% !important;
+        /* Trên điện thoại bìa sẽ chiếm to hơn chút cho dễ nhìn */
+    }
+}
+
+/* Kiểu dáng chung cho các tờ trang sách */
+.page {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    top: 0;
+    left: 50%;
+    transform-origin: left center;
+    transform-style: preserve-3d;
+    transition: transform 0.9s cubic-bezier(0.645, 0.045, 0.355, 1);
+    cursor: pointer;
+    user-select: none;
+}
+
+/* Trang nằm bên trái sau khi lật */
+.page.left {
+    left: 0;
+    transform-origin: right center;
+}
+
+/* Hiệu ứng lật trang thông thường */
+.page.flipped {
+    transform: rotateY(-180deg);
+}
+
+.page.left.flipped {
+    transform: rotateY(180deg);
+}
+
+/* Thiết lập riêng cho Bìa Sách */
+.page.cover-page {
+    left: 0 !important;
+    /* Nằm đè trọn vẹn khung bên phải khi đóng, hoặc ở vị trí chuẩn */
+    width: 100% !important;
+    /* Khi đóng, bìa chiếm trọn bề ngang của cuốn sách dạng đơn */
+    transform-origin: left center !important;
+    z-index: 1000 !important;
+    transition: transform 0.9s cubic-bezier(0.645, 0.045, 0.355, 1), width 0.8s ease;
+}
+
+/* Khi sách mở ra, bìa thu lại kích thước đúng 50% của một trang đôi */
+.book:not(.closed) .page.cover-page {
+    width: 50% !important;
+    left: 50% !important;
+}
+
+.page.cover-page.flipped {
+    transform: rotateY(-180deg);
+}
+
+/* Mặt trước và mặt sau của trang/bìa */
+.page-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    background-color: #fbf0d9;
+    padding: 40px 35px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid #d3c2a0;
+}
+
+.page-face.front {
+    z-index: 2;
+}
+
+.page-face.back {
+    transform: rotateY(180deg);
+    z-index: 1;
+    background-color: #f4ecd8;
+}
+
+/* Giao diện Bìa trước cao cấp */
+.cover-front {
+    background: linear-gradient(135deg, #2c1810 0%, #120a06 100%);
+    color: #e6c687;
+    border: 3px solid #4a2c1f;
+    border-left: 8px solid #1a0f0a;
+    /* Gáy sách bên trái */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 40px;
+    box-shadow: inset 8px 0 20px rgba(0, 0, 0, 0.7);
+}
+
+.cover-title {
+    font-family: 'Cinzel Decorative', Georgia, serif;
+    /* Font chữ nghệ thuật hoàng gia */
+    font-size: 64px;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1.4;
+    margin: 15px 0 25px 0;
+    letter-spacing: 3px;
+    width: 100%;
+
+    /* Hiệu ứng mạ vàng (Gold Foil) tác động lên cả chữ và số (như số 7) */
+    background: linear-gradient(135deg, #f9e2af 0%, #c5a059 35%, #fff1cc 50%, #9e7f43 75%, #f3efe6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    /* Đổ bóng chữ nổi 3D khối sâu trên nền bìa tối */
+    filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.8));
+
+    /* Khung viền nghệ thuật */
+    /* border-top: 2px solid var(--cover-border, #c5a059);
+    border-bottom: 2px solid var(--cover-border, #c5a059); */
+    padding: 24px 10px;
+    position: relative;
+}
+
+/* Hoa văn cổ điển trang trí trên/dưới khung tiêu đề */
+/* .cover-title::before,
+.cover-title::after {
+    content: '❖';
+    position: absolute;
+    font-size: 12px;
+    color: var(--cover-border, #c5a059);
+    left: 50%;
+    transform: translateX(-50%);
+    -webkit-text-fill-color: initial;
+} */
+
+.cover-title::before {
+    top: -7px;
+}
+
+.cover-title::after {
+    bottom: -7px;
+}
+
+.cover-subtitle {
+    font-size: 15px;
+    font-style: italic;
+    color: #c5a867;
+}
+
+/* Dòng đầu trang bìa căn giữa, đơn giản và độc lập hoàn toàn */
+.cover-eyebrow {
+    font-family: 'Cinzel', Georgia, serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 15px;
+    width: 100%;
+    
+    /* Dùng chung hiệu ứng mạ vàng với .cover-title để đồng bộ 100% */
+    background: linear-gradient(135deg, #f9e2af 0%, #c5a059 35%, #fff1cc 50%, #9e7f43 75%, #f3efe6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.8));
+}
+
+/* Nội dung bên trong trang */
+.page-content {
+    font-size: 16px;
+    line-height: 1.65;
+    text-align: justify;
+    overflow: hidden;
+    height: 100%;
+    word-break: break-word;
+}
+
+.page-number {
+    text-align: center;
+    font-size: 13px;
+    color: #777;
+    margin-top: 10px;
+    font-family: sans-serif;
+}
+
+/* Thanh điều hướng */
+.navigation-controls {
+    margin-top: 25px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    color: #fff;
+    font-family: sans-serif;
+}
+
+.navigation-controls button {
+    padding: 9px 18px;
+    background-color: #4a3b32;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background 0.2s, transform 0.1s;
+}
+
+.navigation-controls button:hover {
+    background-color: #634f43;
+}
+
+#page-indicator {
+    min-width: 140px;
+    text-align: center;
+    font-size: 14px;
+}
+
+/* Tối ưu hóa di động */
+@media (max-width: 768px) {
+    .book-container {
+        width: 96vw;
+        height: 68vh;
+    }
+
+    .page-face {
+        padding: 20px 15px;
+    }
+
+    .page-content {
+        font-size: 13.5px;
+        line-height: 1.45;
+    }
+
+    .cover-title {
+        font-size: 22px;
+        padding: 10px;
+    }
+}
