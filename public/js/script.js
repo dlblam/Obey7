@@ -5,11 +5,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     const pageIndicator = document.getElementById('page-indicator');
 
     let pagesData = [];
-    let currentStep = 0; // 0: Đóng sách (Bìa căn giữa), 1: Mở trang 1-2,...
+    let currentStep = 0; 
     let totalSteps = 0;
     let domPages = [];
 
-    // 1. Tải nội dung từ các tệp public/content/1.txt, 2.txt,...
+    // 1. Tải nội dung linh hoạt từ các tệp 1.txt, 2.txt, 3.txt...
     async function loadBookContent() {
         let fileIndex = 1;
         let rawFullText = "";
@@ -17,7 +17,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         while (true) {
             try {
                 const response = await fetch(`public/content/${fileIndex}.txt`);
-                if (!response.ok) break;
+                
+                // Nếu file không tồn tại hoặc lỗi mạng, dừng quét chuỗi file
+                if (!response.ok) {
+                    // Nếu ở file đầu tiên mà lỗi thì thử tạo nội dung dự phòng mẫu
+                    if (fileIndex === 1) {
+                        console.warn("Không tìm thấy file 1.txt. Đang dùng nội dung mẫu.");
+                    }
+                    break;
+                }
+                
                 const text = await response.text();
                 rawFullText += text + "\n\n";
                 fileIndex++;
@@ -27,7 +36,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         if (!rawFullText.trim()) {
-            rawFullText = "Tác Giả: Lâm Bảo Đặng".repeat(1);
+            rawFullText = "Chưa có nội dung truyện. Vui lòng thêm các file 1.txt, 2.txt... vào thư mục public/content/";
         }
 
         paginateContent(rawFullText);
@@ -138,14 +147,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 4. Điều khiển mở / đóng và lật trang tinh tế
     function flipNext() {
         if (currentStep === 0) {
-            // Mở sách: Gỡ class 'closed' để khung sách nở rộng sang dạng đôi 100%, sau đó lật bìa
             bookElement.classList.remove('closed');
             setTimeout(() => {
                 domPages[0].classList.add('flipped');
                 domPages[0].style.zIndex = 100;
                 currentStep = 1;
                 updateBookState();
-            }, 300); // Khớp độ trễ mở khung hình mượt mà
+            }, 300);
         } else if (currentStep < totalSteps) {
             const currentDom = domPages[currentStep];
             currentDom.classList.add('flipped');
@@ -157,7 +165,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     function flipPrev() {
         if (currentStep === 1) {
-            // Đóng sách từ trang 1-2: Lật ngược bìa về trước, sau đó co khung sách về giữa màn hình
             domPages[0].classList.remove('flipped');
             domPages[0].style.zIndex = pagesData.length + 10;
             currentStep = 0;
