@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const pageIndicator = document.getElementById('page-indicator');
 
     let pagesData = [];
-    let currentStep = 0; 
+    let currentStep = 0; // 0: Đóng sách (Bìa căn giữa), 1: Mở trang 1-2,...
     let totalSteps = 0;
     let domPages = [];
 
@@ -17,16 +17,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         while (true) {
             try {
                 const response = await fetch(`public/content/${fileIndex}.txt`);
-                
-                // Nếu file không tồn tại hoặc lỗi mạng, dừng quét chuỗi file
                 if (!response.ok) {
-                    // Nếu ở file đầu tiên mà lỗi thì thử tạo nội dung dự phòng mẫu
-                    if (fileIndex === 1) {
-                        console.warn("Không tìm thấy file 1.txt. Đang dùng nội dung mẫu.");
-                    }
-                    break;
+                    break; // Dừng khi hết file txt
                 }
-                
                 const text = await response.text();
                 rawFullText += text + "\n\n";
                 fileIndex++;
@@ -42,31 +35,50 @@ document.addEventListener('DOMContentLoaded', async () => {
         paginateContent(rawFullText);
     }
 
-    // 2. Thuật toán phân trang thông minh bảo toàn trọn vẹn từ
+    // 2. Thuật toán phân trang thông minh bảo toàn trọn vẹn từ (Đã fix lỗi chiều cao)
     function paginateContent(text) {
-        const samplePageFace = document.createElement('div');
-        samplePageFace.className = 'page-face';
-        samplePageFace.style.visibility = 'hidden';
-        samplePageFace.style.position = 'absolute';
-        document.body.appendChild(samplePageFace);
+        // Tạo khung đo lường chuẩn bên trong bookElement để nhận đúng kích thước thực tế
+        const testContainer = document.createElement('div');
+        testContainer.className = 'page';
+        testContainer.style.visibility = 'hidden';
+        testContainer.style.position = 'absolute';
+        testContainer.style.top = '0';
+        testContainer.style.left = '0';
+        testContainer.style.width = '50%';
+        testContainer.style.height = '100%';
 
+        const testFace = document.createElement('div');
+        testFace.className = 'page-face';
+        
         const testContentDiv = document.createElement('div');
         testContentDiv.className = 'page-content';
-        samplePageFace.appendChild(testContentDiv);
-        const maxHeight = samplePageFace.clientHeight - 70;
-        document.body.removeChild(samplePageFace);
+        
+        testFace.appendChild(testContentDiv);
+        testContainer.appendChild(testFace);
+        bookElement.appendChild(testContainer);
+
+        // Lấy chiều cao thực tế của khung chứa nội dung (trừ padding top/bottom)
+        const maxHeight = testFace.clientHeight - 80;
+        bookElement.removeChild(testContainer);
+
+        const safeMaxHeight = maxHeight > 50 ? maxHeight : 400; // Giá trị phòng hờ an toàn
 
         const words = text.split(/\s+/);
         let currentChunk = "";
         pagesData = [];
 
+        // Gắn lại khung đo lường vào DOM để kiểm tra scrollHeight trong vòng lặp
+        testContainer.style.visibility = 'hidden';
+        bookElement.appendChild(testContainer);
+
         for (let i = 0; i < words.length; i++) {
             let testChunk = currentChunk + (currentChunk ? " " : "") + words[i];
             testContentDiv.innerText = testChunk;
 
-            if (testContentDiv.scrollHeight > maxHeight) {
+            if (testContentDiv.scrollHeight > safeMaxHeight) {
                 pagesData.push(currentChunk);
                 currentChunk = words[i];
+                testContentDiv.innerText = currentChunk;
             } else {
                 currentChunk = testChunk;
             }
@@ -75,6 +87,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             pagesData.push(currentChunk);
         }
 
+        bookElement.removeChild(testContainer);
+
+        // Đảm bảo số trang luôn là số chẵn để hiển thị dạng trang đôi cân đối
         if (pagesData.length % 2 !== 0) {
             pagesData.push("");
         }
